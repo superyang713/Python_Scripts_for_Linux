@@ -1,3 +1,7 @@
+# This simple script is aimed to solve the problem that wechat has no auto-reply
+# function for a specific timespan. The wechat api--itchat is in PyPI, so just
+# install it with pip.
+
 import itchat
 import datetime
 
