@@ -2,11 +2,16 @@
 # function for a specific timespan. The wechat api--itchat is in PyPI, so just
 # install it with pip.
 
+import os
 import itchat
 import datetime
+from itchat.content import PICTURE, RECORDING, ATTACHMENT, VIDEO
 
 
 message = "亲们[Joyful]我们现在下班啦。如有需要，请给我们留言，我们会尽快回复。谢谢！"
+folder = os.path.join(os.path.expanduser('~'), "Desktop", "wechat_folder")
+if not os.path.exists(folder):
+    os.makedirs(folder)
 
 
 @itchat.msg_register(itchat.content.TEXT)
@@ -39,7 +44,7 @@ def text_reply(msg, start=22, end=8, message=message):
 
 
 @itchat.msg_register(itchat.content.TEXT, isGroupChat=True)
-def text_reply(msg, start=22, end=8, message=message):
+def group_reply(msg, start=22, end=8, message=message):
     """
     Auto reply in a specific timespan for group chat.
 
@@ -53,6 +58,11 @@ def text_reply(msg, start=22, end=8, message=message):
         if msg.isAt:
             return message
 
+
+@itchat.msg_register([PICTURE, RECORDING, ATTACHMENT, VIDEO])
+def download_files(msg):
+    filepath = os.path.join(folder, msg.fileName)
+    msg.download(filepath)
 
 itchat.auto_login()
 itchat.run()
