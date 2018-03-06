@@ -12,7 +12,7 @@ message = "亲们[Joyful]我们现在下班啦。如有需要，请给我们留�
 @itchat.msg_register(itchat.content.TEXT)
 def text_reply(msg, start=22, end=8, message=message):
     """
-    Auto reply in a specific timespan.
+    Auto reply in a specific timespan for individual chat.
 
     Parameters
     ----------
@@ -36,6 +36,22 @@ def text_reply(msg, start=22, end=8, message=message):
 
     if now >= starttime_for_auto_reply or now < endtime_for_auto_reply:
         return message
+
+
+@itchat.msg_register(itchat.content.TEXT, isGroupChat=True)
+def text_reply(msg, start=22, end=8, message=message):
+    """
+    Auto reply in a specific timespan for group chat.
+
+    """
+
+    now = datetime.datetime.now().time()
+    starttime_for_auto_reply = datetime.time(hour=start)
+    endtime_for_auto_reply = datetime.time(hour=end)
+
+    if now >= starttime_for_auto_reply or now < endtime_for_auto_reply:
+        if msg.isAt:
+            return message
 
 
 itchat.auto_login()
