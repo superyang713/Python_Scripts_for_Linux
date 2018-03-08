@@ -8,7 +8,7 @@ import datetime
 from itchat.content import PICTURE, RECORDING, ATTACHMENT, VIDEO
 
 
-message = "亲们[Joyful]我们现在下班啦。如有需要，请给我们留言，我们会尽快回复。谢谢！"
+message = "亲们[Joyful]我们现在下班啦。如有需要，请给我们留言，我们会尽快回复哒。谢谢！"
 folder = os.path.join(os.path.expanduser('~'), "Desktop", "wechat_folder")
 if not os.path.exists(folder):
     os.makedirs(folder)
